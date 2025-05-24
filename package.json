@@ -1,0 +1,17 @@
+{
+  "name": "revival-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "discord.js-selfbot-v13": "^3.6.1",
+    "emoji-regex": "^10.4.0"
+  }
+}
