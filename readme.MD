@@ -37,11 +37,13 @@ Create a `config.json` file with the following format:
 ## Usage
 
 1. Open a terminal in the directory
-2. Run the script using `npm start`
+2. Run `npm install` to install dependencies
+3. Run the script using `npm start`
 
 -   Every bot you input will react to every channel
 -   Cooldown represents how long the bot takes to react in ms
 -   You can input as many channels and bots as you want, as long as there's at least one of each
+-   You only need to do `npm install` on the first time
 
 ## License
 
