@@ -38,10 +38,6 @@ export class RevivalBot {
             if (channelMentions.size <= 0) return;
 
             let sayMatches = message.content.match(SAY_REGEX);
-            let quoteMatches = message.content.match(QUOTE_REGEX);
-            let emojiMatches = message.content.matchAll(
-                RevivalBot.emojiRegexInstance
-            );
 
             if (sayMatches) {
                 this.sendMessage(
@@ -52,8 +48,24 @@ export class RevivalBot {
                 return;
             }
 
-            //handle rest of stuff in way that supports multiple of them happening
-            //ping, quote, emoji
+            let quoteRanges = getQuoteRanges(message.content);
+            let quotes = quoteRanges.map((q) => q.text);
+            let emojis = extractEmojis(message.content, quoteRanges);
+            let mentions = extractMentions(
+                message.content,
+                userMentions,
+                quoteRanges
+            );
+
+            let outputMessage = [...quotes, ...emojis, ...mentions]
+                .join(" ")
+                .trim();
+
+            this.sendMessage(
+                channelMentions.first(),
+                outputMessage,
+                this.cooldown
+            );
 
             console.log(message.content);
         });
@@ -63,7 +75,8 @@ export class RevivalBot {
         if (
             !channel
                 .permissionsFor(channel.guild.members.me)
-                .has(Permissions.FLAGS.SEND_MESSAGES)
+                .has(Permissions.FLAGS.SEND_MESSAGES) ||
+            message.trim() == ""
         )
             return;
 
@@ -71,4 +84,43 @@ export class RevivalBot {
             channel.send(message);
         }, cooldown);
     }
+}
+
+function getQuoteRanges(content) {
+    const ranges = [];
+    let match;
+    while ((match = QUOTE_REGEX.exec(content)) !== null) {
+        ranges.push({
+            text: match[1],
+            start: match.index,
+            end: match.index + match[0].length,
+        });
+    }
+    return ranges;
+}
+
+function isInsideRange(index, ranges) {
+    return ranges.some(({ start, end }) => index >= start && index < end);
+}
+
+function extractEmojis(content, quoteRanges) {
+    const emojis = [];
+    for (const match of content.matchAll(RevivalBot.emojiRegexInstance)) {
+        if (!isInsideRange(match.index, quoteRanges)) {
+            emojis.push(match[0]);
+        }
+    }
+    return emojis;
+}
+
+function extractMentions(content, users, quoteRanges) {
+    const mentions = [];
+    for (const user of users.values()) {
+        const mentionStr = `<@${user.id}>`;
+        const index = content.indexOf(mentionStr);
+        if (index !== -1 && !isInsideRange(index, quoteRanges)) {
+            mentions.push(mentionStr);
+        }
+    }
+    return mentions;
 }

@@ -1,8 +1,8 @@
 # Revival Bot
 
-A simple Node.js script to automate discord reivals for Hypixel Housing events
+A simple Node.js script to automate discord revivals for Hypixel Housing events
 
-This project uses the [`discord.js-selfbot-v13`](https://github.com/aiko-chan-ai/discord.js-selfbot-v13) library, which is licensed under the GNU General Public License v3.0.
+This project uses the [`discord.js-selfbot-v13`](https://github.com/aiko-chan-ai/discord.js-selfbot-v13) library, which is licensed under the GNU General Public License v3.0
 
 ---
 
@@ -39,9 +39,10 @@ Create a `config.json` file with the following format:
 1. Open a terminal in the directory
 2. Run the script using `npm start`
 
--   every bot you input will react to every channel
--   cooldown represents how long the bot takes to react in ms
+-   Every bot you input will react to every channel
+-   Cooldown represents how long the bot takes to react in ms
+-   You can input as many channels and bots as you want, as long as there's at least one of each
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0.
+This project is licensed under the GNU General Public License v3.0

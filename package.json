@@ -6,9 +6,9 @@
     "start": "node src/index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "RasseXD",
+  "license": "GNU General Public License v3.0",
+  "description": "A simple Node.js script to automate discord reivals for Hypixel Housing events",
   "type": "module",
   "dependencies": {
     "discord.js-selfbot-v13": "^3.6.1",
