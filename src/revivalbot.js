@@ -39,17 +39,19 @@ export class RevivalBot {
 
             let sayMatches = message.content.match(SAY_REGEX);
 
-            if (sayMatches) {
-                this.sendMessage(
-                    channelMentions.first(),
-                    sayMatches[1],
-                    this.cooldown
-                );
-                return;
-            }
+	    let quoteRanges = getQuoteRanges(message.content);
+	    let quotes = quoteRanges.map((q) => q.text);
 
-            let quoteRanges = getQuoteRanges(message.content);
-            let quotes = quoteRanges.map((q) => q.text);
+
+	    if (sayMatches?.length > 1 && quoteRanges?.length == 0) {
+		this.sendMessage(
+		    channelMentions.first(),
+	    		sayMatches[1],
+    			this.cooldown
+		);
+		return;
+	    }
+
             let emojis = extractEmojis(message.content, quoteRanges);
             let mentions = extractMentions(
                 message.content,
@@ -66,8 +68,6 @@ export class RevivalBot {
                 outputMessage,
                 this.cooldown
             );
-
-            console.log(message.content);
         });
     }
 
